@@ -5,7 +5,7 @@ import base64
 from PIL import Image
 from io import BytesIO
 import numpy as np
-from tensorflow.models import load_model
+from tensorflow.keras.models import load_model
 
 
 app = Flask(__name__)
