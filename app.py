@@ -10,8 +10,9 @@ from tensorflow.keras.models import load_model
 
 app = Flask(__name__)
 CORS(app)
+# CORS(app, origins=['https://bench-map.herokuapp.com'])
 
-MAX_CONTENT_LENGTH = 1024*1024 # 1MB
+MAX_CONTENT_LENGTH = 2*1024*1024 # 2*1MB
 ALLOWED_EXTENSION = set(['jpg', 'jpeg', 'png'])
 image_size = 50
 
