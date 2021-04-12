@@ -17,6 +17,12 @@ MAX_CONTENT_LENGTH = 2*1024*1024 # 2*1MB
 ALLOWED_EXTENSION = set(['jpg', 'jpeg', 'png'])
 image_size = 50
 
+@app.route('/api/healthcheck', methods=['GET'])
+def healthcheck():
+	return jsonify(dict(
+		code=200,
+		message='ok',
+	))
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
@@ -25,7 +31,7 @@ def predict():
         return jsonify(dict(
             code=400,
             error='Bad Request',
-            description='画像が送信されませんでした',
+            message='画像が送信されませんでした',
         ))
     header, image_base64 = data_uri.split(",", 1)
     print(header)
@@ -36,14 +42,14 @@ def predict():
         return jsonify(dict(
             code=415,
             error='UnsupportedMediaType',
-            description='拡張子に誤りがあります',
+            message='拡張子に誤りがあります',
         ))
     binary_image = base64.b64decode(image_base64)
     if len(binary_image) > MAX_CONTENT_LENGTH:
         return jsonify(dict(
             code=413,
             error='RequestEntityTooLarge',
-            description='画像のサイズが大きすぎます',
+            message='画像のサイズが大きすぎます',
         ))
     pillow_image = Image.open(BytesIO(binary_image))
     pillow_image = pillow_image.convert('RGB')
