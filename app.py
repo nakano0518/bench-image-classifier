@@ -52,7 +52,12 @@ def predict():
     X.append(data)
     X = np.array(X)
 
+    # model file load without optimizer
     model = load_model('./bench_cnn_aug.h5')
+    # Before, require compile with optimizer
+    model.compile(loss='categorical_crossentropy',
+              optimizer=keras.optimizers.RMSprop(lr=0.0001, decay=1e-6),
+              metrics=['accuracy'])
     result = model.predict([X])[0]
     predicted = result.argmax() # label index (0: image, 1: bench) of max percentage
     percentage = int(result[predicted] * 100)
