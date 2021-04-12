@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import keras
 from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS
 import base64
@@ -7,6 +6,7 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 from tensorflow.keras.models import load_model
+from tensorflow.keras.optimizers import RMSprop
 
 
 app = Flask(__name__)
@@ -57,7 +57,7 @@ def predict():
     model = load_model('./bench_cnn_aug.h5')
     # Before, require compile with optimizer
     model.compile(loss='categorical_crossentropy',
-              optimizer=keras.optimizers.RMSprop(lr=0.0001, decay=1e-6),
+              optimizer=RMSprop(lr=0.0001, decay=1e-6),
               metrics=['accuracy'])
     result = model.predict([X])[0]
     predicted = result.argmax() # label index (0: image, 1: bench) of max percentage
