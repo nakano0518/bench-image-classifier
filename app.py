@@ -31,7 +31,8 @@ def predict():
         return jsonify(dict(
             code=400,
             error='Bad Request',
-            message='画像が送信されませんでした',
+            message='・送信された画像自体に問題がある可能性があります',
+            label='-1',
         ))
     header, image_base64 = data_uri.split(",", 1)
     print(header)
@@ -42,14 +43,16 @@ def predict():
         return jsonify(dict(
             code=415,
             error='UnsupportedMediaType',
-            message='拡張子に誤りがあります',
+            message='・拡張子に誤りがあります("拡張子はjpeg, jpg, pngのみ")',
+            label='-1',
         ))
     binary_image = base64.b64decode(image_base64)
     if len(binary_image) > MAX_CONTENT_LENGTH:
         return jsonify(dict(
             code=413,
             error='RequestEntityTooLarge',
-            message='画像のサイズが大きすぎます',
+            message='・画像のサイズが大きすぎます',
+            label='-1',
         ))
     pillow_image = Image.open(BytesIO(binary_image))
     pillow_image = pillow_image.convert('RGB')
