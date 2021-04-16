@@ -4,7 +4,7 @@
 ベンチの画像であるかどうかを判定する機械学習モデルを実装した WebAPI
 
 ### 作成背景
-- [Courseraの機械学習コースを修了](https://github.com/nakano0518/coursera-machine-learning)したので勉強した内容のアウトプット
+- [Courseraの機械学習コース(11week)を修了](https://github.com/nakano0518/coursera-machine-learning)したので勉強した内容のアウトプット
 - BenchMapアプリケーション (web、モバイル) に画像判定のバリデーション導入
 
 ### 使い方 (例. POSTMAN)
